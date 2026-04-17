@@ -7,32 +7,119 @@
     <title>Snake Game</title>
 </head>
 <body>
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
-    <div class="controls">
-        <button id="startBtn">Start</button>
-        <button id="pauseBtn">Pause</button>
-        <button id="restartBtn">Restart</button>
+    <div class="tab-bar" role="tablist">
+        <button class="tab-btn tab-btn--active" role="tab" aria-selected="true"  aria-controls="panel-game" id="tab-game">Game</button>
+        <button class="tab-btn"                 role="tab" aria-selected="false" aria-controls="panel-docs" id="tab-docs">Documentation</button>
     </div>
-    <div class="scoreboard">
-        <p>Score: <span id="score">0</span></p>
-        <p>Best Score: <span id="bestScore">0</span></p>
+
+    <!-- ── Game panel ── -->
+    <div id="panel-game" class="tab-panel" role="tabpanel" aria-labelledby="tab-game">
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <div class="controls">
+            <button id="startBtn">Start</button>
+            <button id="pauseBtn">Pause</button>
+            <button id="restartBtn">Restart</button>
+        </div>
+        <div class="scoreboard">
+            <p>Score: <span id="score">0</span></p>
+            <p>Best Score: <span id="bestScore">0</span></p>
+        </div>
+        <div id="settings">
+            <label for="speed">Speed:</label>
+            <select id="speed">
+                <option value="slow">Slow</option>
+                <option value="normal">Normal</option>
+                <option value="fast">Fast</option>
+            </select>
+            <label for="size">Board Size:</label>
+            <select id="size">
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+            </select>
+            <label for="sound">Sound:</label>
+            <input type="checkbox" id="sound" checked>
+        </div>
     </div>
-    <div id="settings">
-        <label for="speed">Speed:</label>
-        <select id="speed">
-            <option value="slow">Slow</option>
-            <option value="normal">Normal</option>
-            <option value="fast">Fast</option>
-        </select>
-        <label for="size">Board Size:</label>
-        <select id="size">
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="25">25</option>
-        </select>
-        <label for="sound">Sound:</label>
-        <input type="checkbox" id="sound" checked>
+
+    <!-- ── Documentation panel ── -->
+    <div id="panel-docs" class="tab-panel tab-panel--hidden" role="tabpanel" aria-labelledby="tab-docs">
+        <div class="docs-content">
+            <h1>Snake — How to Play</h1>
+
+            <h2>Goal</h2>
+            <p>Guide your snake to eat the red food pellets. Each pellet you eat makes the snake one segment longer and adds to your score. The game ends if the snake runs into a wall or into itself.</p>
+
+            <h2>Controls</h2>
+            <ul>
+                <li><strong>Arrow keys</strong> or <strong>W A S D</strong> — change direction</li>
+                <li><strong>Enter</strong> — start the game</li>
+                <li><strong>Space</strong> — pause / unpause</li>
+                <li><strong>R</strong> — restart at any time</li>
+            </ul>
+            <p>You can also use the <strong>Start</strong>, <strong>Pause</strong>, and <strong>Restart</strong> buttons on screen.</p>
+
+            <h2>Scoring</h2>
+            <ul>
+                <li>Each food pellet eaten = <strong>+1 point</strong>.</li>
+                <li>Your all-time best score is saved automatically and shown next to your current score.</li>
+            </ul>
+
+            <h2>Settings</h2>
+            <ul>
+                <li><strong>Speed</strong> — choose Slow, Normal, or Fast. Higher speed means less time to react. Changes take effect on the next game start/restart.</li>
+                <li><strong>Board Size</strong> — choose 15, 20, or 25 cells. A smaller board fills up faster; a larger board gives you more room. Changes take effect on the next game start/restart.</li>
+                <li><strong>Sound</strong> — toggle the eat/game-over sound effects on or off.</li>
+            </ul>
+
+            <h2>Rules</h2>
+            <ul>
+                <li>The snake cannot reverse direction — you cannot go left if you are currently moving right.</li>
+                <li>Hitting a wall ends the game immediately.</li>
+                <li>Running into your own body also ends the game.</li>
+                <li>There is no time limit; the game continues until you lose.</li>
+            </ul>
+
+            <h2>Tips</h2>
+            <ul>
+                <li>Plan a few moves ahead — it gets hard to turn quickly once the snake is long.</li>
+                <li>Try to travel along the edges and sweep inward rather than cutting across the middle.</li>
+                <li>Start on <strong>Slow</strong> speed until you are comfortable, then work up to Fast.</li>
+                <li>A smaller board (15) is actually harder because there is less room to maneuver.</li>
+            </ul>
+
+            <h2>Browser &amp; Device Support</h2>
+            <ul>
+                <li>Works in any modern browser (Chrome, Firefox, Safari, Edge).</li>
+                <li>Keyboard controls require a physical keyboard — touch/mobile devices can use the on-screen buttons to start, pause, and restart, but direction control requires a keyboard.</li>
+            </ul>
+
+            <h2>Accessibility</h2>
+            <ul>
+                <li>All interactive buttons are reachable by <strong>Tab</strong> key and have visible focus outlines.</li>
+                <li>Reduced-motion preference is respected — animations are disabled when the OS setting is on.</li>
+                <li>The game canvas is visual only; a screen reader will announce the score through the score elements on the page.</li>
+            </ul>
+        </div>
     </div>
+
     <script src="game.js"></script>
+    <script>
+      (() => {
+        const tabs   = document.querySelectorAll('.tab-btn');
+        const panels = document.querySelectorAll('.tab-panel');
+
+        tabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+            tabs.forEach(t => { t.classList.remove('tab-btn--active'); t.setAttribute('aria-selected', 'false'); });
+            panels.forEach(p => p.classList.add('tab-panel--hidden'));
+
+            tab.classList.add('tab-btn--active');
+            tab.setAttribute('aria-selected', 'true');
+            document.getElementById(tab.getAttribute('aria-controls')).classList.remove('tab-panel--hidden');
+          });
+        });
+      })();
+    </script>
 </body>
 </html>

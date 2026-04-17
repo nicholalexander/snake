@@ -114,6 +114,101 @@ input[type="checkbox"]:focus-visible {
   accent-color: var(--snake);
 }
 
+/* ── Tab bar ── */
+.tab-bar {
+  width: min(92vw, 520px);
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.tab-btn {
+  appearance: none;
+  flex: 1;
+  border: 1px solid rgba(57, 255, 20, 0.35);
+  background: rgba(20, 48, 24, 0.45);
+  color: var(--muted);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.tab-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(20, 48, 24, 0.7);
+  border-color: rgba(57, 255, 20, 0.7);
+  color: var(--text);
+}
+
+.tab-btn:active {
+  transform: translateY(0);
+}
+
+.tab-btn--active {
+  background: rgba(57, 255, 20, 0.12);
+  border-color: rgba(57, 255, 20, 0.75);
+  color: var(--snake);
+}
+
+.tab-btn:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ── Tab panels ── */
+.tab-panel--hidden {
+  display: none;
+}
+
+/* ── Documentation content ── */
+.docs-content {
+  width: min(92vw, 520px);
+  background: rgba(15, 23, 16, 0.55);
+  border: 1px solid rgba(57, 255, 20, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  padding: 20px 24px;
+  line-height: 1.65;
+}
+
+.docs-content h1 {
+  margin: 0 0 18px;
+  font-size: 1.35rem;
+  color: var(--snake);
+  letter-spacing: 0.5px;
+}
+
+.docs-content h2 {
+  margin: 20px 0 8px;
+  font-size: 1rem;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border-bottom: 1px solid rgba(57, 255, 20, 0.15);
+  padding-bottom: 4px;
+}
+
+.docs-content p,
+.docs-content ul {
+  margin: 0 0 10px;
+  color: var(--muted);
+}
+
+.docs-content ul {
+  padding-left: 1.4em;
+}
+
+.docs-content li {
+  margin-bottom: 4px;
+}
+
+.docs-content strong {
+  color: var(--text);
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
